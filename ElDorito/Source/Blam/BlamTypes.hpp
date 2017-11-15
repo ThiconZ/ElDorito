@@ -4,9 +4,8 @@
 #include <string>
 #include "Math\RealVector3D.hpp"
 
-namespace Blam
-{
-	enum GameType : uint32_t
+namespace Blam {
+	enum GameType : uint32_t 
 	{
 		None = 0,
 		CTF,
@@ -22,7 +21,7 @@ namespace Blam
 		GameTypeCount
 	};
 
-	const std::string GameTypeNames[GameTypeCount] =
+	const std::string GameTypeNames[GameTypeCount] = 
 	{
 		"none",
 		"ctf",
@@ -37,7 +36,7 @@ namespace Blam
 		"infection"
 	};
 
-	const std::string GameTypeFileExtension[GameTypeCount] =
+	const std::string GameTypeFileExtension[GameTypeCount] = 
 	{
 		"unk",
 		"ctf",
@@ -49,10 +48,10 @@ namespace Blam
 		"jugg",
 		"terries",
 		"assault",
-		"zombies"
+		"zombiez"
 	};
 
-	enum GameMode : uint32_t
+	enum GameMode : uint32_t 
 	{
 		InvalidMode = 0,
 		Campaign,
@@ -62,7 +61,7 @@ namespace Blam
 		GameModeCount
 	};
 
-	const std::string GameModeNames[GameModeCount] =
+	const std::string GameModeNames[GameModeCount] = 
 	{
 		"none",
 		"campaign",
@@ -71,7 +70,7 @@ namespace Blam
 		"shared"
 	};
 
-	typedef struct _BLAM_CONTENT_HEADER
+	typedef struct _BLAM_CONTENT_HEADER 
 	{
 		uint64_t ID; // not sure about this
 		wchar_t Name[0x10];
@@ -95,7 +94,7 @@ namespace Blam
 	} BLAM_CONTENT_HEADER, *PBLAM_CONTENT_HEADER;
 
 	// struct of entries in the content items global
-	typedef struct _BLAM_CONTENT_ITEM
+	typedef struct _BLAM_CONTENT_ITEM 
 	{
 		uint32_t Index;
 		uint32_t ItemFlags;
@@ -105,7 +104,7 @@ namespace Blam
 		wchar_t FilePath[0x99];
 	} BLAM_CONTENT_ITEM, *PBLAM_CONTENT_ITEM;
 
-	typedef struct _TEAM_SCORE
+	typedef struct _TEAM_SCORE 
 	{
 		int16_t Score;
 		int16_t TotalScore;
@@ -116,7 +115,7 @@ namespace Blam
 	} TEAM_SCORE;
 	static_assert(sizeof(TEAM_SCORE) == 0x1A, "Invalid Team Score size");
 	
-	typedef struct _PLAYER_SCOREBOARD_STRUCT
+	typedef struct _PLAYER_SCOREBOARD_STRUCT 
 	{
 		int16_t Score;
 		int16_t TotalScore;
@@ -132,7 +131,7 @@ namespace Blam
 	} PLAYER_SCORE;
 	static_assert(sizeof(PLAYER_SCORE) == 0x34, "Invalid Player Score size");
 
-	struct MutiplayerScoreboard
+	struct MutiplayerScoreboard 
 	{
 		uint32_t unknown;
 		PLAYER_SCORE PlayerScores[16];
@@ -141,8 +140,8 @@ namespace Blam
 	};
 	static_assert(sizeof(MutiplayerScoreboard) == 0x420, "Invalid Scoreboard Size");
 
-	// todo: safely make this into a C++ struct without any padding/packing etc
-	typedef struct _BLAM_GAME_VARIANT
+	/* todo: safely make this into a C++ struct without any padding/packing etc */
+	typedef struct _BLAM_GAME_VARIANT 
 	{
 		/* 0xB2C */ uint32_t GameType; // see Blam::GameType
 		float Unknown1; // gravity maybe?
@@ -222,10 +221,9 @@ namespace Blam
 	} BLAM_GAME_VARIANT, *PBLAM_GAME_VARIANT;
 
 
-	struct MapVariant
+	struct MapVariant 
 	{
-		struct BudgetEntry
-		{
+		struct BudgetEntry {
 			uint32_t TagIndex;
 			uint8_t RuntimeMin;
 			uint8_t RuntimeMax;
@@ -234,7 +232,7 @@ namespace Blam
 			float Cost;
 		};
 
-		struct VariantProperties
+		struct VariantProperties 
 		{
 			uint16_t EngineFlags;
 			uint8_t ObjectFlags;
@@ -249,7 +247,7 @@ namespace Blam
 			float ZoneBottom;
 		};
 
-		struct VariantPlacement
+		struct VariantPlacement	
 		{
 			uint16_t PlacementFlags;
 			uint16_t Unknown02;
@@ -292,7 +290,7 @@ namespace Blam
 	static_assert(sizeof(MapVariant) == 0xE090, "Invalid MapVariant size");
 }
 
-enum class CameraType : uint8_t
+enum class CameraType : uint8_t 
 {
 	Following = 0,
 	Orbiting = 1,
@@ -301,14 +299,12 @@ enum class CameraType : uint8_t
 	Dead = 4,
 	Static = 5,
 	Scripted = 6,
-
 	Authored = 7
 };
 
-namespace GameGlobals
+namespace GameGlobals 
 {
-	namespace Physics
-	{
+	namespace Physics {
 		const size_t TLSOffset = 0x32C;
 		const unsigned GravityIndex = 0;
 		const unsigned WaterDensityIndex = 4;
@@ -316,7 +312,7 @@ namespace GameGlobals
 		const float DefaultGravity = 4.17126f;
 	}
 
-	namespace Graphics
+	namespace Graphics 
 	{
 		const size_t TLSOffset = 0x3C0;
 		const unsigned GraphicsOverrideIndex = 0;
@@ -324,7 +320,7 @@ namespace GameGlobals
 		const unsigned ColorIndex = 8;
 	}
 
-	namespace Time
+	namespace Time 
 	{
 		const size_t TLSOffset = 0x50;
 		const unsigned FpsIndex = 4;
@@ -332,19 +328,19 @@ namespace GameGlobals
 		const unsigned GameSpeedIndex = 16;
 	}
 
-	namespace Cinematic
+	namespace Cinematic 
 	{
 		const size_t TLSOffset = 0x324;
 		const unsigned LetterboxIndex = 4;
 	}
 
-	namespace Director
+	namespace Director 
 	{
 		const size_t TLSOffset = 0x60;
 		const unsigned CameraFunctionIndex = 4;
 	}
 
-	namespace DepthOfField
+	namespace DepthOfField 
 	{
 		const size_t TLSOffset = 0x3DC;
 		const unsigned EnableIndex = 0;
@@ -352,14 +348,14 @@ namespace GameGlobals
 	}
 
 	// atmosphere_fog globals
-	namespace Bloom
+	namespace Bloom	
 	{
 		const size_t TLSOffset = 0x104;
 		const unsigned EnableIndex = 0;
 		const unsigned IntensityIndex = 8;
 	}
 
-	namespace Input
+	namespace Input	
 	{
 		const size_t TLSOffset = 0xC4;
 		const size_t DisablePlayerInputIndex = 6;
@@ -368,25 +364,24 @@ namespace GameGlobals
 		const size_t CarryType = 0x3D9;
 	}
 
-	namespace GameInfo
+	namespace GameInfo 
 	{
 		const size_t TLSOffset = 0x3C;
 		const size_t GameMode = 0x10;
 	}
 
-	namespace GameSettings
+	namespace GameSettings 
 	{
 		const size_t TLSOffset = 0x18;
 		const size_t MouseAcceleration = 0x41C88;
 		const size_t YAxisInverted = 0x41C8C;
-
-		// these don't seem to be used, keeping them here because afaik this is what they actually should be though
-		/*const size_t YAxisSensitivity = 0x43C78;
+		/*
+		- don't seem to be used, keeping them here because afaik this is what they actually should be though
+		const size_t YAxisSensitivity = 0x43C78;
 		const size_t XAxisSensitivity = 0x43C7C;
 		const size_t VehicleYAxisSensitivity = 0x43C80;
-		const size_t VehicleXAxisSensitivity = 0x43C84;*/
-
-
+		const size_t VehicleXAxisSensitivity = 0x43C84; 
+		*/
 		const size_t MouseAccelerationAlt = 0x81C88;
 		const size_t YAxisInvertedAlt = 0x81C8C;
 
@@ -396,7 +391,7 @@ namespace GameGlobals
 		const size_t VehicleXAxisSensitivity = 0x83C84;
 	}
 
-	namespace GlobalStats
+	namespace GlobalStats 
 	{
 		const size_t PlayerLength = 0x438;
 		const size_t Kills = 0x04;
@@ -408,32 +403,31 @@ namespace GameGlobals
 		const size_t BestStreak = 0x0E;
 	}
 
-	namespace PlayerAlt // todo: find out what this global is actually for
-	{
+	namespace PlayerAlt 
+	{ // todo: find out what this global is actually for
 		const size_t TLSOffset = 0xe8;
-		const size_t VehicleData = 0x8; // pointer
+		const size_t VehicleData = 0x8; //pointer
 		const size_t VehicleDataIsInVehicle = 0xA0;
 
 		const size_t PlayerObjectSize = 0x3C8;
 	}
 
-	namespace LocalPlayers
+	namespace LocalPlayers 
 	{
 		const size_t TLSOffset = 0x5C;
-
 		const size_t Player0DatumIdx = 0x4;
 		const size_t Player1DatumIdx = 0x4;
 		const size_t Player2DatumIdx = 0x4;
 		const size_t Player3DatumIdx = 0x4;
 	}
 
-	namespace PersistentUserDataChud
+	namespace PersistentUserDataChud 
 	{
 		const size_t TLSOffset = 0x424;
 		const size_t SprintMeterOffset = 0x157;
 	}
 
-	namespace ObjectHeader
+	namespace ObjectHeader 
 	{
 		const size_t TLSOffset = 0x448;
 	}
